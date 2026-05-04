@@ -14,7 +14,7 @@ const authenticatedUser = (username, password) => {
 };
 
 // Login
-regd_users.post("/login", (req, res) => {
+regd_users.post("/customer/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -26,7 +26,7 @@ regd_users.post("/login", (req, res) => {
     let accessToken = jwt.sign({ data: username }, "access", { expiresIn: 3600 });
     req.session.authorization = { accessToken, username };
     return res.status(200).json({
-      message: "Customer successfully logged in",
+      message: "User successfully logged in",
       accessToken
     });
   } else {
@@ -35,7 +35,7 @@ regd_users.post("/login", (req, res) => {
 });
 
 // Add or modify a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
+regd_users.put("/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   const review = req.query.review;
   const username = req.session.authorization.username;
@@ -52,7 +52,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 });
 
 // Delete a book review
-regd_users.delete("/auth/review/:isbn", (req, res) => {
+regd_users.delete("/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   const username = req.session.authorization.username;
 
