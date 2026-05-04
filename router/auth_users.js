@@ -13,7 +13,7 @@ const authenticatedUser = (username, password) => {
   return users.some(u => u.username === username && u.password === password);
 };
 
-// Login
+// Task 8 — Login endpoint: /customer/login
 regd_users.post("/customer/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -34,7 +34,7 @@ regd_users.post("/customer/login", (req, res) => {
   }
 });
 
-// Add or modify a book review
+// Task 9 — Add/modify review: /review/:isbn
 regd_users.put("/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   const review = req.query.review;
@@ -51,7 +51,7 @@ regd_users.put("/review/:isbn", (req, res) => {
   });
 });
 
-// Delete a book review
+// Task 10 — Delete review: /review/:isbn
 regd_users.delete("/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   const username = req.session.authorization.username;
