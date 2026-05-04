@@ -13,7 +13,7 @@ const authenticatedUser = (username, password) => {
   return users.some(u => u.username === username && u.password === password);
 };
 
-// Login route
+// Login
 regd_users.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -25,7 +25,10 @@ regd_users.post("/login", (req, res) => {
   if (authenticatedUser(username, password)) {
     let accessToken = jwt.sign({ data: username }, "access", { expiresIn: 3600 });
     req.session.authorization = { accessToken, username };
-    return res.status(200).json({ message: "User successfully logged in", accessToken });
+    return res.status(200).json({
+      message: "Customer successfully logged in",
+      accessToken
+    });
   } else {
     return res.status(401).json({ message: "Invalid Login. Check username and password" });
   }
@@ -43,7 +46,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
   books[isbn].reviews[username] = review;
   return res.status(200).json({
-    message: `Review successfully added/modified for book with ISBN ${isbn}`,
+    message: `The review for book with ISBN ${isbn} has been added/modified successfully`,
     reviews: books[isbn].reviews
   });
 });
@@ -60,8 +63,7 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
   if (books[isbn].reviews[username]) {
     delete books[isbn].reviews[username];
     return res.status(200).json({
-      message: `Review for ISBN ${isbn} deleted successfully by user ${username}`,
-      reviews: books[isbn].reviews
+      message: `The review for book with ISBN ${isbn} written by the user ${username} has been deleted`
     });
   } else {
     return res.status(404).json({ message: "No review found for this user" });
